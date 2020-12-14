@@ -3,19 +3,7 @@ const textarea = document.getElementById('textarea') as HTMLTextAreaElement;
 
 textarea.focus();
 
-textarea.addEventListener('keyup', (e) => {
-  createTags(e.target!.value);
-
-  if (e.key === 'Enter') {
-    setTimeout(() => {
-      e.target!.value = '';
-    }, 10);
-
-    randomSelect();
-  }
-});
-
-function createTags(input) {
+function createTags(input: string) {
   const tags = input
     .split(',')
     .filter((tag) => tag.trim() !== '')
@@ -29,6 +17,19 @@ function createTags(input) {
     tagEl.innerText = tag;
     tagsEl.appendChild(tagEl);
   });
+}
+
+function pickRandomTag() {
+  const tags = document.querySelectorAll('.tag');
+  return tags[Math.floor(Math.random() * tags.length)];
+}
+
+function highlightTag(tag) {
+  tag.classList.add('highlight');
+}
+
+function unHighlightTag(tag) {
+  tag.classList.remove('highlight');
 }
 
 function randomSelect() {
@@ -55,15 +56,14 @@ function randomSelect() {
   }, times * 100);
 }
 
-function pickRandomTag() {
-  const tags = document.querySelectorAll('.tag');
-  return tags[Math.floor(Math.random() * tags.length)];
-}
+textarea.addEventListener('keyup', (e) => {
+  createTags((e.target as HTMLTextAreaElement).value);
 
-function highlightTag(tag) {
-  tag.classList.add('highlight');
-}
+  if (e.key === 'Enter') {
+    setTimeout(() => {
+      (e.target as HTMLTextAreaElement).value = '';
+    }, 10);
 
-function unHighlightTag(tag) {
-  tag.classList.remove('highlight');
-}
+    randomSelect();
+  }
+});
