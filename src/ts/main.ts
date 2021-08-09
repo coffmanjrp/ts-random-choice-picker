@@ -24,11 +24,11 @@ function pickRandomTag() {
   return tags[Math.floor(Math.random() * tags.length)];
 }
 
-function highlightTag(tag) {
+function highlightTag(tag: Element) {
   tag.classList.add('highlight');
 }
 
-function unHighlightTag(tag) {
+function unHighlightTag(tag: Element) {
   tag.classList.remove('highlight');
 }
 
